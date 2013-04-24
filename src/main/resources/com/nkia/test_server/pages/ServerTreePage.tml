@@ -1,0 +1,7 @@
+<html title="Server Tree"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+
+    <t:test_server.ServerTree></t:test_server.ServerTree>
+
+</html>

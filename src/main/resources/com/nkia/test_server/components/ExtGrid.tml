@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+<script>
+
+
+Ext.onReady(function() {
+
+    var Cygnus = new NkiaCygnus();
+    
+    var serverForm = new Ext.create('Cygnus.form.FormPanel', {   
+        title : '${title}',
+        id: '${id}',
+        labelWidth: 110,
+        width : 300,
+        height : 200,    
+        items : [ {
+            fieldLabel : 'Name',
+            name:'name',
+            allowBlank : false
+        }, {
+            fieldLabel : 'Hostname',
+            name:'hostname',
+            allowBlank : false
+        }, {
+            fieldLabel : 'Ip Address',
+            name:'ipAddress',
+            allowBlank : false
+        }, {
+            fieldLabel : 'Description',
+            name:'description',
+            allowBlank : true
+        } ] ,        
+        buttons : [{
+            text : 'Save',
+            formBind:true,
+            width:100,
+            handler : function(){
+
+                var form = this.up('form').getForm();
+
+                if (form.isValid()) {
+                    Ext.Ajax.request({
+                       url: '${url}:Add',
+                       params:form.getValues(),
+                       method:'POST',
+                       success: function(response, opts) {
+                           var jsondata = Ext.decode(response.responseText);
+                           Cygnus.alert(jsondata.result, jsondata.message);
+                       },
+                       failure: function(response, opts) {
+                           Cygnus.alert('', 'server-side failure with status code ' + response.status);
+                       }
+                    });
+                } else {
+                    Cygnus.alert('', 'Not valid');
+                }
+            }
+
+        }],
+        renderTo:'div_panel1'
+    });
+});
+</script>
+<div id="div_panel1"></div>
+</html>
