@@ -1,8 +1,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
 <head>
      
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=IE10"/>
+<meta http-equiv="X-UA-Compatible" content="chrome=IE10"/>
 <!--[if IE]>    
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>    
 <script>        
@@ -12,7 +13,7 @@
         });        
     });    
 </script>
-<![endif]-->
+<![endif]-->     
 <script>
 var mainBody;
 
@@ -106,15 +107,6 @@ Ext.onReady(function(){
 });
 
 
-function goList(){
-    NkiaCygnus.addComponent(mainPanel,'test_server/ServerListPage',true);
-}
-
-
-function goAdd(){
-    NkiaCygnus.addComponent(mainPanel,'test_server/AddServerPage',true);
-}
-
 
 
 // add Servers
@@ -151,6 +143,33 @@ function deleteServers(){
  });
 }
 
+
+
+
+function goGridTest(){
+    NkiaCygnus.addComponent(mainPanel,'test_server/ServerGridPage',true);
+}
+
+function goList(){
+    NkiaCygnus.addComponent(mainPanel,'test_server/ServerListPage',true);
+}
+
+
+function goAdd(){
+    NkiaCygnus.addComponent(mainPanel,'test_server/AddServerPage',true);
+}
+
+function goGridTest2(){
+    NkiaCygnus.addComponent(mainPanel,'test_server/GridPage',true);
+}
+
+function goWindowTest(){
+    NkiaCygnus.addComponent(mainPanel,'test_server/WindowPage',true);
+}
+
+function goTemplateTest(){
+    NkiaCygnus.addComponent(mainPanel,'test_server/ExtComponentPage',true);
+}
 </script>
 </head> 
     
@@ -165,7 +184,11 @@ function deleteServers(){
             <br/>
                     <div id="toolbar">
                     <a href="javascript:goList();">List</a> |
-                    <a href="javascript:goAdd();">Add</a>
+                    <a href="javascript:goAdd();">Add</a> |
+                    <a href="javascript:goGridTest();">Grid Test</a> |
+                    <a href="javascript:goGridTest2();">Grid Test2</a> |
+                    <a href="javascript:goWindowTest();">Window Test</a> |
+                    <a href="javascript:goTemplateTest();">Template Test</a> |
                     </div>
         </div>
         

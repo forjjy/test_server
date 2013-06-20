@@ -38,16 +38,6 @@ public class ServerComponent implements ClientElement
         this.defaultInitMethod = methodName;
     }
 
-    @AfterRender
-    protected void addJSResources()
-    {
-    }
-
-    @AfterRender
-    protected void addCSSResources()
-    {
-    }
-
     public void setInitMethod(String initMethod)
     {
         this.initMethod = initMethod;

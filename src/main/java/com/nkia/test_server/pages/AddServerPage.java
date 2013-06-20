@@ -11,7 +11,6 @@ import com.nkia.test_core.common.JsonStreamResponse;
 import com.nkia.test_server.entities.Server;
 
 
-@Import(stack = "ExtJSStack")
 public class AddServerPage {
 
 

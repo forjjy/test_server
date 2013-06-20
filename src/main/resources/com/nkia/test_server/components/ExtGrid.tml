@@ -5,62 +5,59 @@
 
 
 Ext.onReady(function() {
+    //
+    var _modelName = 'Cygnus.data.Model.ServerDomain';
+    var _fields = ['id','name','hostname','ipAddress','description'];
+    var _url = '${url}:GetServers';
 
-    var Cygnus = new NkiaCygnus();
+    //var Cygnus = new NkiaCygnus();
+    var myStore = NkiaCygnus.dataStore(_modelName, _fields, _url);
+    myStore.guaranteeRange(0, 199);
+    myStore.load();
     
-    var serverForm = new Ext.create('Cygnus.form.FormPanel', {   
-        title : '${title}',
-        id: '${id}',
-        labelWidth: 110,
-        width : 300,
-        height : 200,    
-        items : [ {
-            fieldLabel : 'Name',
-            name:'name',
-            allowBlank : false
-        }, {
-            fieldLabel : 'Hostname',
-            name:'hostname',
-            allowBlank : false
-        }, {
-            fieldLabel : 'Ip Address',
-            name:'ipAddress',
-            allowBlank : false
-        }, {
-            fieldLabel : 'Description',
-            name:'description',
-            allowBlank : true
-        } ] ,        
-        buttons : [{
-            text : 'Save',
-            formBind:true,
-            width:100,
-            handler : function(){
-
-                var form = this.up('form').getForm();
-
-                if (form.isValid()) {
-                    Ext.Ajax.request({
-                       url: '${url}:Add',
-                       params:form.getValues(),
-                       method:'POST',
-                       success: function(response, opts) {
-                           var jsondata = Ext.decode(response.responseText);
-                           Cygnus.alert(jsondata.result, jsondata.message);
-                       },
-                       failure: function(response, opts) {
-                           Cygnus.alert('', 'server-side failure with status code ' + response.status);
-                       }
-                    });
-                } else {
-                    Cygnus.alert('', 'Not valid');
-                }
-            }
-
-        }],
-        renderTo:'div_panel1'
+    Ext.EventManager.onWindowResize(function () {
+        grid_${divId}.setSize(undefined, undefined);
     });
+    
+    var grid_${divId} = Ext.create('Cygnus.grid.Panel', {
+        id : NkiaCygnus.randomString(20),
+        title: "$title",
+        store: myStore,
+        verticalScrollerType: 'paginggridscroller',
+        columns: [
+                  { header: 'ID',  dataIndex: 'id', hidden: true },
+                  { header: 'Name', dataIndex: 'name', flex: 1,resizable:true },
+                  { header: 'Hostname', dataIndex: 'hostname', flex: 1,resizable:true },
+                  { header: 'IP', dataIndex: 'ipAddress', flex: 1,resizable:true },
+                  { header: 'Description', dataIndex: 'description', flex: 1,resizable:true }, 
+                  {
+                      xtype: 'actioncolumn',
+                      width: 40,
+                      items: [{
+                          icon: '/tutorial1/images/delete_icon.png',
+                          handler: function(grid, rowIndex, colindex) {
+                              var record = grid.getStore().getAt(rowIndex); 
+                              //alert(record.get("id"));
+                              deleteServer(grid, record, record.get("id"));
+                          }
+                      }]
+                  }
+
+              ],        
+        stripeRows: true,
+        //columnLines: true,
+        height: '100%',
+        width: '100%',    
+        listeners: {
+            itemdblclick: function(dataview, record, index, item, e) {
+                //alert('dblclick');
+                editServer(record);
+            }
+        },
+
+        renderTo: "div_panel_${divId}"
+   });
 });
 </script>
-<div id="div_panel1"></div>
+<div id="div_panel_${divId}"></div>
 </html>

@@ -15,7 +15,6 @@ import com.nkia.test_server.base.ServerComponent;
 import com.nkia.test_server.entities.Server;
 
 
-@Import(stack = "ExtJSStack")
 public class ServerList extends ServerComponent {
 	
 	@Inject
